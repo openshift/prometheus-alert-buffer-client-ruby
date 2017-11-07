@@ -62,8 +62,6 @@ module Prometheus
         end
 
         response.body
-      rescue 
-        raise RequestError, 'Bad response from server'
       end
 
       # post alert:
@@ -72,8 +70,6 @@ module Prometheus
         @client.post do |req|
           req.body = alert
         end
-      rescue
-        raise RequestError, 'Bad response from server'
       end
 
       # Helper function to evalueate the low level proxy option
