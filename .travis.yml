@@ -1,0 +1,10 @@
+sudo: false
+language: ruby
+# Needed for rainbow 2.2.1 / rubygems issues.
+before_install:
+  - |
+    if [[ "$(ruby -e 'puts RUBY_VERSION')" != 1.* ]]; then gem update --system; fi
+rvm:
+  - 2.3.3
+  - 2.4.0
+
