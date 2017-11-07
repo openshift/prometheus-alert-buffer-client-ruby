@@ -59,6 +59,16 @@ module Prometheus
         JSON.parse(response.body)['messages']
       end
 
+      # post alert:
+      # @param [String] alert Alert to post
+      def post(alert)
+        @client.post do |req|
+          req.body = alert
+        end
+      rescue
+        raise RequestError, 'Bad response from server'
+      end
+
       # Helper function to evalueate the low level proxy option
       def faraday_proxy(options)
         return options[:proxy] if options[:proxy]
