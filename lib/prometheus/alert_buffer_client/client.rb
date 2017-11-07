@@ -49,6 +49,7 @@ module Prometheus
       # @option options [String] :generation_id Database generation Id.
       # @option options [Integer] :from_index Minimal index of alerts to fetch.
       #
+      # @return [Hash] response with keys: generationID, messages
       # All alerts will be fetched if options are omitted.
       def get(options = {})
         response = @client.get do |req|
@@ -56,7 +57,9 @@ module Prometheus
           req.params['fromIndex'] = options[:from_index]
         end
 
-        JSON.parse(response.body)['messages']
+        JSON.parse(response.body)
+      rescue
+        raise RequestError, 'Bad response from server'
       end
 
       # post alert:

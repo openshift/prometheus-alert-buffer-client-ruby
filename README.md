@@ -37,6 +37,10 @@ alerts = prometheus.get()
 
 alerts = prometheus.get(generation_id: '12497ca8-b597-4590-ac5d-d55af7f3d185', from_index: 34)
 
+Alerts will be returned in a Hash with following keys:
+* generationID
+* messages
+
 #### Posting alerts
 \# post an alert JSON to server
 
