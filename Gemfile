@@ -7,6 +7,7 @@ def ruby_version?(constraint)
 end
 
 gem 'faraday'
+gem 'faraday_middleware'
 
 group :test do
   gem 'coveralls'

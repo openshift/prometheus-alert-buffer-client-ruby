@@ -2,6 +2,7 @@
 
 require 'json'
 require 'faraday'
+require 'faraday_middleware'
 
 module Prometheus
   # Alert Client is a ruby implementation for a Prometheus-alert-buffer client.
@@ -39,7 +40,10 @@ module Prometheus
 
         @client = Faraday.new(
           faraday_options(options),
-        )
+        )  do |conn|
+          conn.response(:json)
+          conn.adapter(Faraday.default_adapter)
+        end
       end
 
 
@@ -57,8 +61,8 @@ module Prometheus
           req.params['fromIndex'] = options[:from_index]
         end
 
-        JSON.parse(response.body)
-      rescue
+        response.body
+      rescue 
         raise RequestError, 'Bad response from server'
       end
 
