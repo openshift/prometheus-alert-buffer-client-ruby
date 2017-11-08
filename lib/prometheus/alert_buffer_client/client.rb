@@ -21,7 +21,6 @@ module Prometheus
         },
       }.freeze
 
-
       # Create a Prometheus Alert client:
       #
       # @param [Hash] options
@@ -40,12 +39,11 @@ module Prometheus
 
         @client = Faraday.new(
           faraday_options(options),
-        )  do |conn|
+        ) do |conn|
           conn.response(:json)
           conn.adapter(Faraday.default_adapter)
         end
       end
-
 
       # Get alerts:
       #
@@ -101,7 +99,7 @@ module Prometheus
         return unless headers && headers[:token]
 
         {
-          Authorization: "Bearer #{headers[:token].to_s}",
+          Authorization: "Bearer #{headers[:token]}",
         }
       end
 
@@ -128,7 +126,6 @@ module Prometheus
           request: faraday_request(options),
         }
       end
-
     end
   end
 end

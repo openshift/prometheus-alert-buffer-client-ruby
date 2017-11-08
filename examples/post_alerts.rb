@@ -5,4 +5,3 @@ prometheus = Prometheus::AlertBufferClient::Client.new(url: 'http://localhost:90
 
 prometheus.post '{"posted":"alert"}'
 prometheus.post '{"alertId":12}'
-
