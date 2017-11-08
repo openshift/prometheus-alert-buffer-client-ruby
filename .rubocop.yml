@@ -1,6 +1,6 @@
 AllCops:
     Exclude:
-        - lib/prometheus/api_client/version.rb
+        - lib/prometheus/alert_buffer_client/version.rb
 
 AlignHash:
     EnforcedHashRocketStyle: table
@@ -22,6 +22,7 @@ Metrics/BlockLength:
         - 'spec/**/*.rb'
 
 Metrics/LineLength:
+    Max: 120
     Exclude:
         - 'spec/**/*.rb'
 

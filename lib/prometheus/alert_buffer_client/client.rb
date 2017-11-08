@@ -2,6 +2,7 @@
 
 require 'json'
 require 'faraday'
+require 'faraday_middleware'
 
 module Prometheus
   # Alert Client is a ruby implementation for a Prometheus-alert-buffer client.
@@ -19,7 +20,6 @@ module Prometheus
           timeout: 5,
         },
       }.freeze
-
 
       # Create a Prometheus Alert client:
       #
@@ -39,9 +39,11 @@ module Prometheus
 
         @client = Faraday.new(
           faraday_options(options),
-        )
+        ) do |conn|
+          conn.response(:json)
+          conn.adapter(Faraday.default_adapter)
+        end
       end
-
 
       # Get alerts:
       #
@@ -49,6 +51,7 @@ module Prometheus
       # @option options [String] :generation_id Database generation Id.
       # @option options [Integer] :from_index Minimal index of alerts to fetch.
       #
+      # @return [Hash] response with keys: generationID, messages
       # All alerts will be fetched if options are omitted.
       def get(options = {})
         response = @client.get do |req|
@@ -56,7 +59,7 @@ module Prometheus
           req.params['fromIndex'] = options[:from_index]
         end
 
-        JSON.parse(response.body)['messages']
+        response.body
       end
 
       # post alert:
@@ -65,8 +68,6 @@ module Prometheus
         @client.post do |req|
           req.body = alert
         end
-      rescue
-        raise RequestError, 'Bad response from server'
       end
 
       # Helper function to evalueate the low level proxy option
@@ -98,7 +99,7 @@ module Prometheus
         return unless headers && headers[:token]
 
         {
-          Authorization: "Bearer #{headers[:token].to_s}",
+          Authorization: "Bearer #{headers[:token]}",
         }
       end
 
@@ -125,7 +126,6 @@ module Prometheus
           request: faraday_request(options),
         }
       end
-
     end
   end
 end
