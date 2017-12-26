@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version           = Prometheus::AlertBufferClient::VERSION
   s.summary           = 'A suite of reading alerts stored on ' \
                         'a Prometheus Alert Buffer server.'
-  s.authors           = ['Zohar Galor']
+  s.authors           = ['Zohar Galor', 'Yaacov Zamir']
   s.email             = ['zgalor@redhat.com']
   s.homepage          = 'https://github.com/openshift/prometheus-alert-buffer-client-ruby'
   s.license           = 'Apache-2.0'
